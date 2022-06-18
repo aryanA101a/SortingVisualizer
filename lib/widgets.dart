@@ -21,7 +21,7 @@ class SortingScatterChart extends StatelessWidget {
           maxY: elements - 1,
           minX: 0,
           minY: 0),
-      swapAnimationDuration: Duration(microseconds: 0), // Optional
+      swapAnimationDuration: Duration.zero, // Optional
       swapAnimationCurve: Curves.linear, // Optional
     );
   }

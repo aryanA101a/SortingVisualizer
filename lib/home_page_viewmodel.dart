@@ -12,11 +12,15 @@ class HomePageViewModel with ChangeNotifier {
   late List<int> _x;
   late List<ScatterSpot> _scatterSpots;
   List<ScatterSpot> get scatterSpots => _scatterSpots;
-
-  late SortingImpl _sortingImpl;
+  Timer? _timer;
+  Timer? get timer => _timer;
+  setTimer(void Function(Timer) callback) {
+    _timer = Timer.periodic(Duration.zero, (timer) {
+      callback(timer);
+    });
+  }
 
   HomePageViewModel() {
-    _sortingImpl = SortingImpl();
     init();
   }
 
@@ -37,7 +41,7 @@ class HomePageViewModel with ChangeNotifier {
   sort(Sorting sorting) {
     switch (sorting) {
       case Sorting.bubble:
-        _sortingImpl.bubbleSort(_scatterSpots, notifyListeners);
+        SortingImpl.bubbleSort(_scatterSpots, notifyListeners);
         break;
       default:
     }

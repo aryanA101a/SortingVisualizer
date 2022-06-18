@@ -31,6 +31,7 @@ dependencies:
   fl_chart: ^0.51.0
   flutter:
     sdk: flutter
+  get_it: ^7.2.0
   provider: ^6.0.3
 
 dev_dependencies:

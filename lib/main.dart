@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sorting_visualizer/di/locator.dart';
 import 'package:sorting_visualizer/home_page.dart';
 import 'package:sorting_visualizer/home_page_viewmodel.dart';
 
@@ -10,6 +11,7 @@ void main() {
       [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  setup();
   runApp(const MyApp());
 }
 

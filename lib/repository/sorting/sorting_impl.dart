@@ -1,15 +1,25 @@
 import 'dart:async';
 
 import 'package:fl_chart/fl_chart.dart';
+import 'package:sorting_visualizer/di/locator.dart';
+import 'package:sorting_visualizer/home_page.dart';
+import 'package:sorting_visualizer/home_page_viewmodel.dart';
 
 class SortingImpl {
-  bubbleSort(List<ScatterSpot> scatterSpots, Function notifyListnersCallback) {
+  static bubbleSort(
+    List<ScatterSpot> scatterSpots,
+    Function notifyListnersCallback,
+  ) {
     var n = scatterSpots.length;
 
     var i = 0;
     var j = 0;
 
-    Timer.periodic(Duration(microseconds: 0), (timer) {
+    Timer? timer = getIt<HomePageViewModel>().timer;
+    if (timer != null && timer.isActive) {
+      timer.cancel();
+    }
+    getIt<HomePageViewModel>().setTimer((timer) {
       if (i < n) {
         if (j < n - i - 1) {
           if (scatterSpots[j].y > scatterSpots[j + 1].y) {
@@ -17,7 +27,7 @@ class SortingImpl {
             scatterSpots[j] =
                 scatterSpots[j].copyWith(y: scatterSpots[j + 1].y);
             scatterSpots[j + 1] = scatterSpots[j + 1].copyWith(y: temp.y);
-            
+
             notifyListnersCallback();
           }
           j++;
