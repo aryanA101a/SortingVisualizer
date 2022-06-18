@@ -43,6 +43,9 @@ class HomePageViewModel with ChangeNotifier {
       case Sorting.bubble:
         SortingImpl.bubbleSort(_scatterSpots, notifyListeners);
         break;
+         case Sorting.selection:
+        SortingImpl.selectionSort(_scatterSpots, notifyListeners);
+        break;
       default:
     }
   }

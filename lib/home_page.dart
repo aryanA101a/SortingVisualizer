@@ -40,11 +40,22 @@ class HomePage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SortButton(
-                text: "BubbleSort",
-                onPressed: () {
-                  context.read<HomePageViewModel>().sort(Sorting.bubble);
-                },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SortButton(
+                    text: "BubbleSort",
+                    onPressed: () {
+                      context.read<HomePageViewModel>().sort(Sorting.bubble);
+                    },
+                  ),
+                  SortButton(
+                    text: "SelectionSort",
+                    onPressed: () {
+                      context.read<HomePageViewModel>().sort(Sorting.selection);
+                    },
+                  ),
+                ],
               ),
             )
           ],

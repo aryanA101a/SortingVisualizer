@@ -40,4 +40,46 @@ class SortingImpl {
       }
     });
   }
+
+  static selectionSort(
+    List<ScatterSpot> scatterSpots,
+    Function notifyListnersCallback,
+  ) {
+    var n = scatterSpots.length;
+
+    var i = 0;
+    var j = i + 1;
+    var index_min = i;
+
+    Timer? timer = getIt<HomePageViewModel>().timer;
+    if (timer != null && timer.isActive) {
+      timer.cancel();
+    }
+    getIt<HomePageViewModel>().setTimer((timer) {
+      if (i < n - 1) {
+        if (j < n) {
+          if (scatterSpots[j].y < scatterSpots[index_min].y) {
+            index_min = j;
+          }
+          j++;
+        } else {
+          j = i + 1;
+
+          if (index_min != i) {
+            var temp = scatterSpots[i];
+            scatterSpots[i] =
+                scatterSpots[i].copyWith(y: scatterSpots[index_min].y);
+            scatterSpots[index_min] =
+                scatterSpots[index_min].copyWith(y: temp.y);
+                
+            notifyListnersCallback();
+          }
+          i++;
+          index_min = i;
+        }
+      } else {
+        timer.cancel();
+      }
+    });
+  }
 }
