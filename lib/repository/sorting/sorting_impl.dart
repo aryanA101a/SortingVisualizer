@@ -71,11 +71,48 @@ class SortingImpl {
                 scatterSpots[i].copyWith(y: scatterSpots[index_min].y);
             scatterSpots[index_min] =
                 scatterSpots[index_min].copyWith(y: temp.y);
-                
+
             notifyListnersCallback();
           }
           i++;
           index_min = i;
+        }
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  static insertionSort(
+    List<ScatterSpot> scatterSpots,
+    Function notifyListnersCallback,
+  ) {
+    var n = scatterSpots.length;
+
+    int i = 1;
+    int j = i - 1;
+    ScatterSpot temp = scatterSpots[i];
+
+    Timer? timer = getIt<HomePageViewModel>().timer;
+    if (timer != null && timer.isActive) {
+      timer.cancel();
+    }
+    getIt<HomePageViewModel>().setTimer((timer) {
+      if (i < n) {
+        if (j >= 0 && temp.y < scatterSpots[j].y) {
+          scatterSpots[j + 1] =
+              scatterSpots[j + 1].copyWith(y: scatterSpots[j].y);
+          --j;
+          notifyListnersCallback();
+        } else {
+          scatterSpots[j + 1] = scatterSpots[j + 1].copyWith(y: temp.y);
+          i++;
+          if (i < n) {
+            temp = scatterSpots[i];
+            j = i - 1;
+          } else {
+            timer.cancel();
+          }
         }
       } else {
         timer.cancel();

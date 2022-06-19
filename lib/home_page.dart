@@ -55,6 +55,12 @@ class HomePage extends StatelessWidget {
                       context.read<HomePageViewModel>().sort(Sorting.selection);
                     },
                   ),
+                   SortButton(
+                    text: "InsertionSort",
+                    onPressed: () {
+                      context.read<HomePageViewModel>().sort(Sorting.insertion);
+                    },
+                  ),
                 ],
               ),
             )
