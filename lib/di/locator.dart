@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:sorting_visualizer/home_page_viewmodel.dart';
+import 'package:sorting_visualizer/viewmodel/home_page_viewmodel.dart';
 
 final getIt = GetIt.instance;
 

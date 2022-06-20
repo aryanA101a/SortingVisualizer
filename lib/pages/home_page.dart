@@ -4,10 +4,10 @@ import 'dart:developer';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sorting_visualizer/home_page_viewmodel.dart';
+import 'package:sorting_visualizer/viewmodel/home_page_viewmodel.dart';
 import 'package:sorting_visualizer/widgets.dart';
 
-import 'constants.dart';
+import '../constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,12 +55,24 @@ class HomePage extends StatelessWidget {
                       context.read<HomePageViewModel>().sort(Sorting.selection);
                     },
                   ),
-                   SortButton(
+                  SortButton(
                     text: "InsertionSort",
                     onPressed: () {
                       context.read<HomePageViewModel>().sort(Sorting.insertion);
                     },
                   ),
+                  SortButton(
+                    text: "QuickSort",
+                    onPressed: () {
+                      context.read<HomePageViewModel>().sort(Sorting.quick);
+                    },
+                  ),
+                  // SortButton(
+                  //   text: "MergeSort",
+                  //   onPressed: () {
+                  //     context.read<HomePageViewModel>().sort(Sorting.merge);
+                  //   },
+                  // ),
                 ],
               ),
             )

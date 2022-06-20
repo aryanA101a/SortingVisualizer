@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sorting_visualizer/di/locator.dart';
-import 'package:sorting_visualizer/home_page.dart';
-import 'package:sorting_visualizer/home_page_viewmodel.dart';
+import 'package:sorting_visualizer/pages/home_page.dart';
+import 'package:sorting_visualizer/viewmodel/home_page_viewmodel.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

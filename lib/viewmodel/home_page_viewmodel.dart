@@ -5,13 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:sorting_visualizer/constants.dart';
 import 'package:sorting_visualizer/repository/sorting/sorting_impl.dart';
 
-enum Sorting { bubble, selection, insertion, quick }
+enum Sorting { bubble, selection, insertion, quick ,merge}
 
 class HomePageViewModel with ChangeNotifier {
   late List<int> _y;
   late List<int> _x;
+
   late List<ScatterSpot> _scatterSpots;
   List<ScatterSpot> get scatterSpots => _scatterSpots;
+
   Timer? _timer;
   Timer? get timer => _timer;
   setTimer(void Function(Timer) callback) {
@@ -46,8 +48,14 @@ class HomePageViewModel with ChangeNotifier {
       case Sorting.selection:
         SortingImpl.selectionSort(_scatterSpots, notifyListeners);
         break;
-        case Sorting.insertion:
+      case Sorting.insertion:
         SortingImpl.insertionSort(_scatterSpots, notifyListeners);
+        break;
+         case Sorting.quick:
+        SortingImpl.quickSort(_scatterSpots, notifyListeners);
+        break;
+        case Sorting.merge:
+        SortingImpl.mergeSort(_scatterSpots, notifyListeners);
         break;
       default:
     }
