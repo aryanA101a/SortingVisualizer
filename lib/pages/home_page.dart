@@ -67,12 +67,12 @@ class HomePage extends StatelessWidget {
                       context.read<HomePageViewModel>().sort(Sorting.quick);
                     },
                   ),
-                  // SortButton(
-                  //   text: "MergeSort",
-                  //   onPressed: () {
-                  //     context.read<HomePageViewModel>().sort(Sorting.merge);
-                  //   },
-                  // ),
+                  SortButton(
+                    text: "MergeSort",
+                    onPressed: () {
+                      context.read<HomePageViewModel>().sort(Sorting.merge);
+                    },
+                  ),
                 ],
               ),
             )

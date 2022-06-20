@@ -90,8 +90,8 @@ class SortingImpl {
     if (low < high) {
       int pi = await _partition(list, low, high, notifyListnersCallback);
 
-      _qSort(list, low, pi - 1, notifyListnersCallback);
-      _qSort(list, pi + 1, high, notifyListnersCallback);
+      await _qSort(list, low, pi - 1, notifyListnersCallback);
+      await _qSort(list, pi + 1, high, notifyListnersCallback);
     }
   }
 
@@ -112,14 +112,14 @@ class SortingImpl {
     for (int j = low; j < high; j++) {
       if (list[j].y < pivot) {
         _swap(list, i, j);
-        await Future.delayed(Duration(milliseconds: 1));
+        await Future.delayed(Duration.zero);
         notifyListnersCallback();
         i++;
       }
     }
 
     _swap(list, i, high);
-    await Future.delayed(Duration(milliseconds: 1));
+    await Future.delayed(Duration.zero);
     notifyListnersCallback();
     return i;
   }
@@ -138,74 +138,74 @@ class SortingImpl {
 
 
     // log(scatterSpots.toString());
-    // mSort(scatterSpots, 0, scatterSpots.length - 1,notifyListnersCallback);
+    mSort(scatterSpots, 0, scatterSpots.length - 1,notifyListnersCallback);
 
-    // // Future.delayed(Duration(seconds: 2));
+    // Future.delayed(Duration(seconds: 2));
     // log(scatterSpots.toString());
     // notifyListnersCallback();
   }
-  // static merge(List<ScatterSpot> list, int leftIndex, int middleIndex,
-  //     int rightIndex, Function notifyListnersCallback,) {
-  //   int leftSize = middleIndex - leftIndex + 1;
-  //   int rightSize = rightIndex - middleIndex;
+  static merge(List<ScatterSpot> list, int leftIndex, int middleIndex,
+      int rightIndex, Function notifyListnersCallback,)async {
+    int leftSize = middleIndex - leftIndex + 1;
+    int rightSize = rightIndex - middleIndex;
 
-  //   List<ScatterSpot> leftList = [];
-  //   List<ScatterSpot> rightList = [];
+    List<ScatterSpot> leftList = [];
+    List<ScatterSpot> rightList = [];
 
-  //   for (int i = 0; i < leftSize; i++) {
-  //     leftList.add(list[leftIndex + i]);
-  //   }
-  //   for (int j = 0; j < rightSize; j++) {
-  //     rightList.add(list[middleIndex + j + 1]);
-  //   }
+    for (int i = 0; i < leftSize; i++) {
+      leftList.add(list[leftIndex + i]);
+    }
+    for (int j = 0; j < rightSize; j++) {
+      rightList.add(list[middleIndex + j + 1]);
+    }
 
-  //   int i = 0, j = 0;
-  //   int k = leftIndex;
+    int i = 0, j = 0;
+    int k = leftIndex;
 
-  //   while (i < leftSize && j < rightSize) {
-  //     if (leftList[i].y <= rightList[j].y) {
-  //       list[k] = leftList[i].copyWith(x: double.parse(k.toString()));
-  //       i++;
-  //     } else {
-  //       list[k] = rightList[j].copyWith(x: double.parse(k.toString()));
-  //       j++;
-  //     }
-  //     k++;
-  //     Timer(Duration(seconds: 1), (() {
-  //       notifyListnersCallback();
-  //     }));
-  //   }
-  //   log("while1");
-  //   while (i < leftSize) {
-  //     list[k] = leftList[i].copyWith(x: double.parse(k.toString()));
-  //     i++;
-  //     k++;
-  //     Timer(Duration(seconds: 1), (() {
-  //       notifyListnersCallback();
-  //     }));
-  //   }
-  //   log("while2");
+    while (i < leftSize && j < rightSize) {
+      if (leftList[i].y <= rightList[j].y) {
+        list[k] = leftList[i].copyWith(x: double.parse(k.toString()));
+        i++;
+      } else {
+        list[k] = rightList[j].copyWith(x: double.parse(k.toString()));
+        j++;
+      }
+      k++;
+      await Future.delayed(Duration.zero, (() {
+        notifyListnersCallback();
+      }));
+    }
 
-  //   while (j < rightSize) {
-  //     list[k] = rightList[j].copyWith(x: double.parse(k.toString()));
-  //     j++;
-  //     k++;
-  //     Timer(Duration(seconds: 1), (() {
-  //       notifyListnersCallback();
-  //     }));
-  //   }
-  //   log("while3");
-  // }
+    while (i < leftSize) {
+      list[k] = leftList[i].copyWith(x: double.parse(k.toString()));
+      i++;
+      k++;
+      await Future.delayed(Duration.zero, (() {
+        notifyListnersCallback();
+      }));
+    }
 
-  // static mSort(List<ScatterSpot> list, int leftIndex, int rightIndex, Function notifyListnersCallback,) {
-  //   if (leftIndex < rightIndex) {
-  //     int middleIndex = (rightIndex + leftIndex) ~/ 2;
 
-  //     mSort(list, leftIndex, middleIndex,notifyListnersCallback);
-  //     mSort(list, middleIndex + 1, rightIndex,notifyListnersCallback);
+    while (j < rightSize) {
+      list[k] = rightList[j].copyWith(x: double.parse(k.toString()));
+      j++;
+      k++;
+      await Future.delayed(Duration.zero, (() {
+        notifyListnersCallback();
+      }));
+    }
 
-  //     merge(list, leftIndex, middleIndex, rightIndex,notifyListnersCallback);
-  //     log("merge");
-  //   }
-  // }
+  }
+
+  static mSort(List<ScatterSpot> list, int leftIndex, int rightIndex, Function notifyListnersCallback,) async{
+    if (leftIndex < rightIndex) {
+      int middleIndex = (rightIndex + leftIndex) ~/ 2;
+
+      await mSort(list, leftIndex, middleIndex,notifyListnersCallback);
+      await mSort(list, middleIndex + 1, rightIndex,notifyListnersCallback);
+
+      await merge(list, leftIndex, middleIndex, rightIndex,notifyListnersCallback);
+
+    }
+  }
 }
