@@ -13,6 +13,7 @@ class SortingScatterChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScatterChart(
       ScatterChartData(
+          scatterTouchData: ScatterTouchData(enabled: false),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(show: false),
           gridData: FlGridData(show: false),
@@ -30,7 +31,9 @@ class SortingScatterChart extends StatelessWidget {
 class SortButton extends StatelessWidget {
   final void Function()? onPressed;
   final String text;
-  const SortButton({required this.text,required this.onPressed,
+  const SortButton({
+    required this.text,
+    required this.onPressed,
     Key? key,
   }) : super(key: key);
 

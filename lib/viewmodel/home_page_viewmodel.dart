@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sorting_visualizer/constants.dart';
 import 'package:sorting_visualizer/repository/sorting/sorting_impl.dart';
 
-enum Sorting { bubble, selection, insertion, quick ,merge}
+enum Sorting { bubble, selection, insertion, quick, merge }
 
 class HomePageViewModel with ChangeNotifier {
   late List<int> _y;
@@ -14,15 +15,40 @@ class HomePageViewModel with ChangeNotifier {
   late List<ScatterSpot> _scatterSpots;
   List<ScatterSpot> get scatterSpots => _scatterSpots;
 
-  Timer? _timer;
-  Timer? get timer => _timer;
-  setTimer(void Function(Timer) callback) {
-    _timer = Timer.periodic(Duration.zero, (timer) {
-      callback(timer);
-    });
+  late Sorting _currentSort;
+  setCurrenSort(int sort) {
+    _currentSort = Sorting.values[sort];
+  }
+
+  late bool _isRunning;
+  bool get isRunning => _isRunning;
+
+  late bool _isSorted;
+  bool get isSorted => _isSorted;
+
+
+  start() {
+    _isRunning = true;
+    notifyListeners();
+    log("start");
+    sort();
+  }
+
+  stop() {
+    log("stop");
+
+    _isRunning = false;
+    notifyListeners();
+  }
+
+  reset() {
+    init();
+    notifyListeners();
   }
 
   HomePageViewModel() {
+    _currentSort = Sorting.bubble;
+    
     init();
   }
 
@@ -38,26 +64,34 @@ class HomePageViewModel with ChangeNotifier {
               color: spotColor,
               radius: 3,
             ));
+
+    _isRunning = false;
+    _isSorted = false;
   }
 
-  sort(Sorting sorting) {
-    switch (sorting) {
+  void sort() async {
+    log("sort");
+    switch (_currentSort) {
       case Sorting.bubble:
-        SortingImpl.bubbleSort(_scatterSpots, notifyListeners);
+        await SortingImpl.bubbleSort(_scatterSpots, notifyListeners);
         break;
       case Sorting.selection:
-        SortingImpl.selectionSort(_scatterSpots, notifyListeners);
+        await SortingImpl.selectionSort(_scatterSpots, notifyListeners);
         break;
       case Sorting.insertion:
-        SortingImpl.insertionSort(_scatterSpots, notifyListeners);
+        await SortingImpl.insertionSort(_scatterSpots, notifyListeners);
         break;
-         case Sorting.quick:
-        SortingImpl.quickSort(_scatterSpots, notifyListeners);
+      case Sorting.quick:
+        await SortingImpl.quickSort(_scatterSpots, notifyListeners);
         break;
-        case Sorting.merge:
-        SortingImpl.mergeSort(_scatterSpots, notifyListeners);
+      case Sorting.merge:
+        await SortingImpl.mergeSort(_scatterSpots, notifyListeners);
         break;
       default:
     }
+    if(_isRunning){
+      _isSorted = true;
+    }
+    stop();
   }
 }
